@@ -1,0 +1,1 @@
+STSabc.txt file opened .. close it!!! 1
