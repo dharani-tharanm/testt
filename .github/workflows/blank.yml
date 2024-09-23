@@ -14,20 +14,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Runs a one-line script
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Copy .txt files, excluding RealHardware.txt
-      - name: Copy txt files excluding RealHardware
+      # Run a script to list files excluding RealHardware.txt
+      - name: List STS files excluding RealHardware.txt
         run: |
-          mkdir -p ${{ github.workspace }}/output
-          find . -name "*.txt" ! -name "*RealHardware.txt" -exec cp {} ${{ github.workspace }}/output/ \;
+          echo "Listing STS*.txt files but excluding RealHardware.txt:"
+          find . -name "STS*.txt" ! -name "*.RealHardware.txt"
 
-      # Upload the copied files as an artifact
-      - name: Upload output as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: copied-txts
-          path: ${{ github.workspace }}/output
-
+      # If you need to process those files, you can use a loop here
+      # For example:
+      - name: Process valid files
+        run: |
+          for file in $(find . -name "STS*.txt" ! -name "*.RealHardware.txt"); do
+            echo "Processing $file"
+            # Add additional steps to process the files if needed
+          done
